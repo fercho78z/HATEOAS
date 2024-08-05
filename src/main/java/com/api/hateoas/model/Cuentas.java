@@ -1,5 +1,7 @@
 package com.api.hateoas.model;
 
+import java.sql.Types;
+
 import org.springframework.hateoas.RepresentationModel;
 
 import jakarta.persistence.Column;
@@ -22,13 +24,19 @@ public class Cuentas extends RepresentationModel<Cuentas>{
 	private String nombre;
 	@Column(length=20,nullable=false,unique=true)
 	private String numeroCuenta;
-	
+	@Column(columnDefinition = "FLOAT(10,2)")
 	private float balance;
-	public Cuentas() {
+
+	@Override
+	public String toString() {
+		return "Cuentas [Id=" + Id + ", nombre=" + nombre + ", numeroCuenta=" + numeroCuenta + ", balance=" + balance
+				+ "]";
 	}
-	public Cuentas(Integer id, String numeroCuenta) {
-	
+	public Cuentas() {
 		
+	}
+	public Cuentas(float balance,Integer id) {
+		super();
 	}
 	public Cuentas(Integer id, String nombre, String numeroCuenta, float balance) {
 		super();

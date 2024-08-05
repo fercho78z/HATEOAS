@@ -18,7 +18,7 @@ public class CuentaRespositoryTest {
 private CuentaRespository cuentaR;
 	@Test
 	void testAgregarCuentas() {
-		Cuentas cuenta= new Cuentas(122313,"10000");
+		Cuentas cuenta= new Cuentas(122313,10000);
 		Cuentas guardarCuenta= cuentaR.save(cuenta);
 		Assertions.assertThat(guardarCuenta).isNotNull(); //comprobamos que la cuenta no se a nula
 		Assertions.assertThat(guardarCuenta.getId()).isGreaterThan(0);//comprobammos que el id sea mayor que cero

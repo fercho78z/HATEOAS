@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.api.hateoas.model.Cuentas;
 import com.api.hateoas.repository.CuentaRespository;
-
+import com.api.hateoas.exception.CuentaNoFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -28,7 +28,24 @@ public class CuentaService {
 		return cuentaR.save(cuenta);
 	}
 	
-	public void delete(Integer id) {
-		cuentaR.deleteById(id);
+	public void delete(Integer id) throws CuentaNoFoundException {
+		if(cuentaR.existsById(id)) {
+			cuentaR.deleteById(id);
+			throw new CuentaNoFoundException("Cuenta Encontrada: " + id);
+		}
+		throw new CuentaNoFoundException("Cuenta no encontrada: " + id);
+	}
+	
+	public Cuentas depositar(float balance, Integer id) {
+		System.out.println("Service monto : "+ balance + "-" +"id : " + id);
+		cuentaR.actualizarBalance(balance, id);
+	
+		return cuentaR.findById(id).get();
+	}
+	public Cuentas retirar(float balance, Integer id) {
+		cuentaR.actualizarBalance(-balance, id);
+		System.out.println("Service Retiro monto : "+ -balance + "-" +"id : " + id);
+		return cuentaR.findById(id).get();
+		
 	}
 }
